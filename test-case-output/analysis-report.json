@@ -1,0 +1,178 @@
+{
+  "overallScore": 29,
+  "dimensions": [
+    {
+      "label": "Data reasoning & analytical thinking",
+      "score": 22,
+      "priority": "High",
+      "originalPoint": "Designed and implemented scalable systems serving millions of users.",
+      "gap": "Insufficient evidence of explicit metric tracking for data reasoning & analytical thinking on this point.",
+      "whyItMatters": "Recruiters for Data Scientist (Product / Experimentation) roles specifically probe for data reasoning & analytical thinking and key metrics during initial screening.",
+      "tailoredRewrite": "Designed and implemented scalable systems serving millions of users, demonstrating strong data reasoning & analytical thinking which improved system throughput by 30%."
+    },
+    {
+      "label": "Communication & insight clarity",
+      "score": 27,
+      "priority": "High",
+      "originalPoint": "Collaborated cross-functionally to deliver high-impact product features.",
+      "gap": "Bullets describe tasks but lack the outcome-oriented depth expected for top-tier communication & insight clarity benchmarks.",
+      "whyItMatters": "Top-tier companies assess communication & insight clarity through engineering outcomes; task-only bullets are often filtered out.",
+      "tailoredRewrite": "Collaborated cross-functionally to deliver high-impact product features, directly addressing communication & insight clarity needs and reducing latency by 45%."
+    },
+    {
+      "label": "Data pipelines & system thinking",
+      "score": 28,
+      "priority": "Medium",
+      "originalPoint": "Collaborated cross-functionally to deliver high-impact product features.",
+      "gap": "Bullets describe tasks but lack the outcome-oriented depth expected for top-tier data pipelines & system thinking benchmarks.",
+      "whyItMatters": "Top-tier companies assess data pipelines & system thinking through engineering outcomes; task-only bullets are often filtered out.",
+      "tailoredRewrite": "Collaborated cross-functionally to deliver high-impact product features, directly addressing data pipelines & system thinking needs and reducing latency by 45%."
+    },
+    {
+      "label": "Experimentation & causal reasoning",
+      "score": 29,
+      "priority": "High",
+      "originalPoint": "Collaborated cross-functionally to deliver high-impact product features.",
+      "gap": "Bullets describe tasks but lack the outcome-oriented depth expected for top-tier experimentation & causal reasoning benchmarks.",
+      "whyItMatters": "Top-tier companies assess experimentation & causal reasoning through engineering outcomes; task-only bullets are often filtered out.",
+      "tailoredRewrite": "Collaborated cross-functionally to deliver high-impact product features, directly addressing experimentation & causal reasoning needs and reducing latency by 45%."
+    },
+    {
+      "label": "Metrics & business impact",
+      "score": 35,
+      "priority": "Low",
+      "originalPoint": "Designed and implemented scalable systems serving millions of users.",
+      "gap": "Insufficient evidence of explicit metric tracking for metrics & business impact on this point.",
+      "whyItMatters": "Recruiters for Data Scientist (Product / Experimentation) roles specifically probe for metrics & business impact and key metrics during initial screening.",
+      "tailoredRewrite": "Designed and implemented scalable systems serving millions of users, demonstrating strong metrics & business impact which improved system throughput by 30%."
+    },
+    {
+      "label": "Machine learning depth",
+      "score": 36,
+      "priority": "Medium",
+      "originalPoint": "Designed and implemented scalable systems serving millions of users.",
+      "gap": "Insufficient evidence of explicit metric tracking for machine learning depth on this point.",
+      "whyItMatters": "Recruiters for Data Scientist (Product / Experimentation) roles specifically probe for machine learning depth and key metrics during initial screening.",
+      "tailoredRewrite": "Designed and implemented scalable systems serving millions of users, demonstrating strong machine learning depth which improved system throughput by 30%."
+    }
+  ],
+  "topWeaknesses": [
+    "Data reasoning & analytical thinking: Insufficient evidence of explicit metric tracking for data reasoning & analytical thinking on this point.",
+    "Communication & insight clarity: Bullets describe tasks but lack the outcome-oriented depth expected for top-tier communication & insight clarity benchmarks.",
+    "Data pipelines & system thinking: Bullets describe tasks but lack the outcome-oriented depth expected for top-tier data pipelines & system thinking benchmarks.",
+    "Experimentation & causal reasoning: Bullets describe tasks but lack the outcome-oriented depth expected for top-tier experimentation & causal reasoning benchmarks.",
+    "Metrics & business impact: Insufficient evidence of explicit metric tracking for metrics & business impact on this point."
+  ],
+  "topImprovements": [
+    "Data reasoning & analytical thinking: Update to 'Designed and implemented scalable systems serving millions of users, demonstrating strong data reasoning & analytical thinking which improved system throughput by 30%.'",
+    "Communication & insight clarity: Update to 'Collaborated cross-functionally to deliver high-impact product features, directly addressing communication & insight clarity needs and reducing latency by 45%.'",
+    "Data pipelines & system thinking: Update to 'Collaborated cross-functionally to deliver high-impact product features, directly addressing data pipelines & system thinking needs and reducing latency by 45%.'",
+    "Experimentation & causal reasoning: Update to 'Collaborated cross-functionally to deliver high-impact product features, directly addressing experimentation & causal reasoning needs and reducing latency by 45%.'",
+    "Metrics & business impact: Update to 'Designed and implemented scalable systems serving millions of users, demonstrating strong metrics & business impact which improved system throughput by 30%.'"
+  ],
+  "linkedinAnalysis": {
+    "score": 91,
+    "improvements": [
+      "Add role-specific keywords to your headline: SQL, experimentation, A/B testing.",
+      "Ensure your current title matches your target role for recruiter search matching.",
+      "List tools and technologies explicitly — recruiters filter by stack.",
+      "Include links to GitHub, portfolio, or published work.",
+      "Convert paragraph descriptions into bullet points for faster recruiter scanning."
+    ],
+    "rewrittenHeadline": "SWAPNIL PATIL | Data Scientist (Product / Experimentation) | SQL · experimentation · A/B testing",
+    "rewrittenAbout": "Data Scientist (Product / Experimentation) with 5+ years building high-impact systems. I specialize in SQL, experimentation, A/B testing, metrics — translating complex technical work into measurable business outcomes.\n\nCurrently: Senior Engineer at Google. Previously shipped products used by millions.\n\nSkills: Python, SQL, AWS, Machine Learning, TensorFlow, A/B Testing, dbt, Airflow"
+  },
+  "jobMatch": {
+    "fitScore": 37,
+    "strongMatches": [
+      "Core skills align: Python, SQL, AWS, Machine Learning",
+      "5 years of relevant experience maps to role requirements"
+    ],
+    "missingSkills": [
+      "A/B testing",
+      "statistical significance",
+      "hypothesis testing"
+    ],
+    "riskFactors": [
+      "Resume bullets are task-focused — add outcome metrics to stand out.",
+      "Missing explicit mention of: SQL, experimentation"
+    ]
+  },
+  "resumeTailoring": {
+    "bulletRewrites": [
+      {
+        "original": "Designed and implemented scalable systems serving millions of users.",
+        "rewritten": "Designed and implemented scalable systems serving millions of users — resulting in measurable improvements to team velocity and system reliability.",
+        "explanation": "Adding outcome context transforms a task description into an achievement statement."
+      },
+      {
+        "original": "Collaborated cross-functionally to deliver high-impact product features.",
+        "rewritten": "Led cross-functional initiative that shipped experiments — reducing time-to-market by 25%.",
+        "explanation": "Specificity and numbers make recruiters stop scrolling."
+      }
+    ],
+    "missingKeywords": [
+      "experimentation",
+      "metrics"
+    ],
+    "reorderingSuggestions": [
+      "Move Skills section directly below Summary for fast recruiter parsing.",
+      "Lead each bullet with an active verb (Built, Designed, Reduced, Shipped).",
+      "Place most impactful metrics in the first 2 lines of each role."
+    ],
+    "optimizedResume": {
+      "name": "SWAPNIL PATIL",
+      "current_role": "Data Scientist (Product / Experimentation)",
+      "summary": "Data Scientist (Product / Experimentation) with 5+ years of experience building SQL, experimentation, A/B testing-powered systems at scale. Proven track record of shipping high-impact work and driving measurable outcomes across Software Engineering and Distributed Systems.",
+      "skills": [
+        "Python",
+        "SQL",
+        "AWS",
+        "Machine Learning",
+        "TensorFlow",
+        "A/B Testing",
+        "dbt",
+        "Airflow",
+        "Spark",
+        "LLM",
+        "RAG",
+        "causal inference",
+        "regression",
+        "product analytics"
+      ],
+      "work_experience": [
+        {
+          "company": "Google",
+          "role": "Data Scientist (Product / Experimentation)",
+          "duration": "2023 – Present",
+          "responsibilities": [
+            "Designed and implemented scalable systems serving millions of users.",
+            "Collaborated cross-functionally to deliver high-impact product features.",
+            "Improved system performance by 30% through optimization of data pipelines."
+          ]
+        },
+        {
+          "company": "Meta",
+          "role": "Software Engineer",
+          "duration": "2021 – 2023",
+          "responsibilities": [
+            "Designed and implemented scalable systems serving millions of users.",
+            "Collaborated cross-functionally to deliver high-impact product features.",
+            "Improved system performance by 30% through optimization of data pipelines."
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "title": "Open Source Contribution",
+          "description": "Contributed performance improvements to a popular data processing library.",
+          "technologies": [
+            "Python",
+            "SQL",
+            "AWS"
+          ]
+        }
+      ]
+    }
+  }
+}

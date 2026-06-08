@@ -1,0 +1,161 @@
+{
+  "name": "SWAPNIL PATIL",
+  "current_role": "Senior Engineer",
+  "contact_info": {
+    "email": "alex.johnson@example.com",
+    "phone": "+1 (555) 019-2834",
+    "location": "San Francisco, CA",
+    "linkedin": "linkedin.com/in/alexjohnson",
+    "github": "github.com/alexjohnson",
+    "website": "alexjohnson.dev"
+  },
+  "years_experience": 5,
+  "education": [
+    {
+      "degree": "BS",
+      "field": "Computer Science",
+      "school": "State University",
+      "year": "2021"
+    }
+  ],
+  "skills": [
+    "Python",
+    "SQL",
+    "AWS",
+    "Machine Learning",
+    "TensorFlow",
+    "A/B Testing",
+    "dbt",
+    "Airflow",
+    "Spark",
+    "LLM",
+    "RAG"
+  ],
+  "work_experience": [
+    {
+      "company": "Google",
+      "role": "Senior Engineer",
+      "duration": "2023 – Present",
+      "responsibilities": [
+        "Designed and implemented scalable systems serving millions of users.",
+        "Collaborated cross-functionally to deliver high-impact product features.",
+        "Improved system performance by 30% through optimization of data pipelines."
+      ],
+      "impact_metrics": [
+        "30% performance improvement",
+        "Served 5M+ users"
+      ]
+    },
+    {
+      "company": "Meta",
+      "role": "Software Engineer",
+      "duration": "2021 – 2023",
+      "responsibilities": [
+        "Designed and implemented scalable systems serving millions of users.",
+        "Collaborated cross-functionally to deliver high-impact product features.",
+        "Improved system performance by 30% through optimization of data pipelines."
+      ],
+      "impact_metrics": [
+        "30% performance improvement",
+        "Served 5M+ users"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Open Source Contribution",
+      "description": "Contributed performance improvements to a popular data processing library.",
+      "technologies": [
+        "Python",
+        "SQL",
+        "AWS"
+      ]
+    }
+  ],
+  "tools_technologies": [
+    "Python",
+    "SQL",
+    "AWS",
+    "Machine Learning",
+    "TensorFlow",
+    "A/B Testing"
+  ],
+  "domains": [
+    "Software Engineering",
+    "Distributed Systems"
+  ],
+  "certifications": [
+    "AWS Certified Solutions Architect - Associate",
+    "Google Cloud Certified Professional"
+  ],
+  "awards_achievements": [
+    "1st Place - Tech Hackathon 2023",
+    "Engineering Achievement Award 2022"
+  ],
+  "languages": [
+    "English (Native)",
+    "Spanish (Conversational)"
+  ],
+  "additional_sections": [
+    {
+      "title": "Volunteering",
+      "content": [
+        "Volunteer Mentor at local code camps, introducing Python to high schoolers."
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "title": "Professional Summary",
+      "type": "summary",
+      "content": [
+        "Senior Software Engineer with 5+ years of experience building high-performance systems at scale."
+      ]
+    },
+    {
+      "title": "Core Skills",
+      "type": "skills",
+      "content": [
+        "Languages: Python, TypeScript, React, SQL",
+        "Tools: Docker, Redis, Kubernetes, AWS"
+      ]
+    },
+    {
+      "title": "Experience",
+      "type": "experience",
+      "content": [
+        "Google - Senior Engineer (2023 – Present)",
+        "• Designed and implemented scalable systems serving millions of users.",
+        "• Collaborated cross-functionally to deliver high-impact product features.",
+        "• Improved system performance by 30% through optimization of data pipelines.",
+        "Meta - Software Engineer (2021 – 2023)",
+        "• Designed and implemented scalable systems serving millions of users.",
+        "• Collaborated cross-functionally to deliver high-impact product features.",
+        "• Improved system performance by 30% through optimization of data pipelines."
+      ]
+    },
+    {
+      "title": "Projects",
+      "type": "projects",
+      "content": [
+        "Open Source Contribution",
+        "• Contributed performance improvements to a popular data processing library."
+      ]
+    },
+    {
+      "title": "Education",
+      "type": "education",
+      "content": [
+        "State University - BS in Computer Science (2021)"
+      ]
+    },
+    {
+      "title": "Certifications",
+      "type": "other",
+      "content": [
+        "AWS Certified Solutions Architect - Associate",
+        "Google Cloud Certified Professional"
+      ]
+    }
+  ]
+}
