@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Upload, FileText, Sparkles, Settings, AlertTriangle,
   CheckCircle, ArrowRight, RefreshCw, Briefcase, Info,
-  Copy, Check, Printer, Code, X, ChevronDown, User, Gauge,
+  Copy, Check, Printer, Code, X, ChevronDown, User, Gauge, Zap,
 } from 'lucide-react';
 import { CLUSTERS, type ClusterId, buildRoleConfig } from '@/utils/taxonomy';
 import { evaluateHeuristic } from '@/utils/scoring';
@@ -13,6 +13,7 @@ import ScoreGauge from './ScoreGauge';
 import SettingsModal from './SettingsModal';
 import TailoredResume from './TailoredResume';
 import AuthModal from './AuthModal';
+import SubscriptionModal from './SubscriptionModal';
 import { createClient } from '@/utils/supabase/client';
 import { staticTestCases } from '@/utils/test-cases';
 
@@ -409,8 +410,14 @@ export default function Dashboard() {
   const [session, setSession] = useState<any>(null);
   const [profileData, setProfileData] = useState<any>(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [subscriptionOpen, setSubscriptionOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [scansHistory, setScansHistory] = useState<any[]>([]);
+  const [monthlyScansCount, setMonthlyScansCount] = useState<number>(0);
+
+  const isExcludedUser = session?.user?.email === "swappatil123@gmail.com";
+  const isPro = profileData && profileData.max_scans >= 1000;
+  const isLimitReached = !!session && !isExcludedUser && !isPro && monthlyScansCount >= 5;
 
   useEffect(() => {
     const supabase = createClient();
@@ -421,6 +428,7 @@ export default function Dashboard() {
       setSession(session);
       if (session?.user) {
         fetchProfile(session.user.id);
+        fetchMonthlyScansCount(session.user.id);
       }
     });
 
@@ -428,8 +436,10 @@ export default function Dashboard() {
       setSession(session);
       if (session?.user) {
         fetchProfile(session.user.id);
+        fetchMonthlyScansCount(session.user.id);
       } else {
         setProfileData(null);
+        setMonthlyScansCount(0);
       }
     });
 
@@ -446,6 +456,25 @@ export default function Dashboard() {
     if (!error && data) {
       setProfileData(data);
     }
+  };
+
+  const fetchMonthlyScansCount = async (userId: string) => {
+    const supabase = createClient();
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const { count, error } = await supabase
+      .from('scans')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId)
+      .gte('created_at', startOfMonth.toISOString());
+
+    if (!error && count !== null) {
+      setMonthlyScansCount(count);
+      return count;
+    }
+    return 0;
   };
 
   const fetchScansHistory = async () => {
@@ -474,6 +503,18 @@ export default function Dashboard() {
     setSession(null);
     setProfileData(null);
     setAnalysis(null);
+  };
+
+  const handleSubscriptionSuccess = async () => {
+    if (!session?.user) return;
+    const supabase = createClient();
+    const { error } = await supabase
+      .from('profiles')
+      .update({ max_scans: 1000 })
+      .eq('id', session.user.id);
+    if (!error) {
+      fetchProfile(session.user.id);
+    }
   };
 
   const handleLoadPastScan = (scan: any) => {
@@ -776,14 +817,16 @@ export default function Dashboard() {
     // ── Authentication & Limits Guards ───────────────────────────
     const isDeveloperSandbox = isDev && overrideInputs?.resumeText.includes("SWAPNIL PATIL");
     const isExcludedUser = session?.user?.email === "swappatil123@gmail.com";
-    
+    const isPro = profileData && profileData.max_scans >= 1000;
+    const isLimitReached = !isDeveloperSandbox && !isExcludedUser && !isPro && monthlyScansCount >= 5;
+
     if (!isDeveloperSandbox && !session) {
       setAuthModalOpen(true);
       return;
     }
 
-    if (!isDeveloperSandbox && !isExcludedUser && profileData && profileData.scans_used >= profileData.max_scans) {
-      setError(`You have used all of your available scans (${profileData.max_scans} / ${profileData.max_scans}). Please upgrade your account to perform more scans.`);
+    if (isLimitReached) {
+      setSubscriptionOpen(true);
       return;
     }
 
@@ -857,6 +900,7 @@ export default function Dashboard() {
         } else {
           // Refresh history list
           fetchScansHistory();
+          fetchMonthlyScansCount(session.user.id);
         }
 
         // 2. Increment profile scans count (only if user is not excluded from quota)
@@ -1253,7 +1297,11 @@ export default function Dashboard() {
               <>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full font-medium border border-white/5">
-                    {profileData ? `${profileData.max_scans - profileData.scans_used} / ${profileData.max_scans} Scans Left` : 'Checking Scans...'}
+                    {profileData ? (
+                      session.user.email === 'swappatil123@gmail.com' ? 'Unlimited (Tester)' :
+                      profileData.max_scans >= 1000 ? 'Pro Unlimited' :
+                      `${Math.max(0, 5 - monthlyScansCount)} / 5 Monthly Scans Left`
+                    ) : 'Checking Scans...'}
                   </span>
                   <span className="text-[10px] text-zinc-400 font-mono hidden md:inline truncate max-w-[120px]">
                     {session.user.email}
@@ -1327,6 +1375,29 @@ export default function Dashboard() {
         ══════════════════════════════════════════════════ */}
         {!isLoading && !analysis && showInputForm && (
           <div className="fade-up space-y-8">
+            {isLimitReached && (
+              <div className="card p-6 border-violet-500/30 bg-gradient-to-r from-violet-950/40 via-blue-950/30 to-zinc-950 text-left relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl pointer-events-none" />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+                  <div className="space-y-1">
+                    <div className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest text-violet-400">
+                      <Zap className="w-3.5 h-3.5 fill-violet-400 text-violet-400" />
+                      Scan Limit Reached (5/5)
+                    </div>
+                    <h3 className="text-sm font-bold text-white">Unlock Unlimited Resume Evaluations</h3>
+                    <p className="text-xs text-zinc-400 max-w-xl">
+                      You've used all 5 of your free monthly scans. Upgrade to Pro for unlimited scoring, deep technical calibration, and automated bullet-point optimization.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setSubscriptionOpen(true)}
+                    className="px-4 py-2.5 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white rounded-lg text-xs font-bold transition-all shadow-lg shadow-violet-950/20 shrink-0 cursor-pointer"
+                  >
+                    Upgrade to Pro
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* ── Hero ─────────────────────────────────── */}
             <div className="text-center space-y-3 pb-2">
@@ -1526,15 +1597,27 @@ export default function Dashboard() {
                 </div>
 
                 {/* CTA */}
-                <button onClick={() => runAnalysis()}
-                  className="w-full py-3.5 rounded-xl font-semibold text-sm text-white
-                             bg-gradient-to-r from-violet-600 to-blue-600
-                             hover:from-violet-500 hover:to-blue-500
-                             shadow-lg shadow-violet-900/30
-                             flex items-center justify-center gap-2 transition-all group">
-                  Score My Profile
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"/>
-                </button>
+                {isLimitReached ? (
+                  <button onClick={() => setSubscriptionOpen(true)}
+                    className="w-full py-3.5 rounded-xl font-bold text-sm text-white
+                               bg-gradient-to-r from-violet-600 to-blue-600
+                               hover:from-violet-500 hover:to-blue-500
+                               shadow-lg shadow-violet-900/30
+                               flex items-center justify-center gap-2 transition-all group cursor-pointer">
+                    <Zap className="w-4 h-4 fill-white" />
+                    Upgrade to Pro to Score Profile
+                  </button>
+                ) : (
+                  <button onClick={() => runAnalysis()}
+                    className="w-full py-3.5 rounded-xl font-semibold text-sm text-white
+                               bg-gradient-to-r from-violet-600 to-blue-600
+                               hover:from-violet-500 hover:to-blue-500
+                               shadow-lg shadow-violet-900/30
+                               flex items-center justify-center gap-2 transition-all group cursor-pointer">
+                    Score My Profile
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"/>
+                  </button>
+                )}
                 <p className="text-[10px] text-[var(--text-3)] text-center">
                   No API key? Runs in demo mode with realistic mock scores.
                 </p>
@@ -1970,6 +2053,12 @@ export default function Dashboard() {
         onClose={() => setHistoryOpen(false)}
         scans={scansHistory}
         onSelectScan={handleLoadPastScan}
+      />
+
+      <SubscriptionModal
+        isOpen={subscriptionOpen}
+        onClose={() => setSubscriptionOpen(false)}
+        onSuccess={handleSubscriptionSuccess}
       />
     </div>
   );
