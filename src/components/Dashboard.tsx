@@ -13,7 +13,7 @@ import ScoreGauge from './ScoreGauge';
 import SettingsModal from './SettingsModal';
 import TailoredResume from './TailoredResume';
 import AuthModal from './AuthModal';
-import SubscriptionModal from './SubscriptionModal';
+import PaymentModal from './PaymentModal';
 import { createClient } from '@/utils/supabase/client';
 import { staticTestCases } from '@/utils/test-cases';
 
@@ -410,14 +410,14 @@ export default function Dashboard() {
   const [session, setSession] = useState<any>(null);
   const [profileData, setProfileData] = useState<any>(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [subscriptionOpen, setSubscriptionOpen] = useState(false);
+  const [creditModalOpen, setCreditModalOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [scansHistory, setScansHistory] = useState<any[]>([]);
   const [monthlyScansCount, setMonthlyScansCount] = useState<number>(0);
 
   const isExcludedUser = session?.user?.email === "swappatil123@gmail.com";
-  const isPro = profileData && profileData.max_scans >= 1000;
-  const isLimitReached = !!session && !isExcludedUser && !isPro && monthlyScansCount >= 5;
+  const remainingScans = profileData ? profileData.max_scans - profileData.scans_used : 5;
+  const isLimitReached = !!session && !isExcludedUser && remainingScans <= 0;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -514,15 +514,19 @@ export default function Dashboard() {
     setAnalysis(null);
   };
 
-  const handleSubscriptionSuccess = async () => {
+  const handleCreditPurchaseSuccess = async (creditsBought: number) => {
     if (!session?.user) return;
     const supabase = createClient();
+    const currentMax = profileData?.max_scans ?? 5;
+    const nextMax = currentMax + creditsBought;
+
     const { error } = await supabase
       .from('profiles')
-      .update({ max_scans: 1000 })
+      .update({ max_scans: nextMax })
       .eq('id', session.user.id);
     if (!error) {
       fetchProfile(session.user.id);
+      fetchMonthlyScansCount(session.user.id);
     }
   };
 
@@ -826,8 +830,8 @@ export default function Dashboard() {
     // ── Authentication & Limits Guards ───────────────────────────
     const isDeveloperSandbox = isDev && overrideInputs?.resumeText.includes("SWAPNIL PATIL");
     const isExcludedUser = session?.user?.email === "swappatil123@gmail.com";
-    const isPro = profileData && profileData.max_scans >= 1000;
-    const isLimitReached = !isDeveloperSandbox && !isExcludedUser && !isPro && monthlyScansCount >= 5;
+    const currentRemaining = profileData ? profileData.max_scans - profileData.scans_used : 5;
+    const isLimitReached = !isDeveloperSandbox && !isExcludedUser && currentRemaining <= 0;
 
     if (!isDeveloperSandbox && !session) {
       setAuthModalOpen(true);
@@ -835,7 +839,7 @@ export default function Dashboard() {
     }
 
     if (isLimitReached) {
-      setSubscriptionOpen(true);
+      setCreditModalOpen(true);
       return;
     }
 
@@ -1309,7 +1313,7 @@ export default function Dashboard() {
                     {profileData ? (
                       session.user.email === 'swappatil123@gmail.com' ? 'Unlimited (Tester)' :
                       profileData.max_scans >= 1000 ? 'Pro Unlimited' :
-                      `${Math.max(0, 5 - monthlyScansCount)} / 5 Monthly Scans Left`
+                      `${Math.max(0, profileData.max_scans - profileData.scans_used)} / ${profileData.max_scans} Scans Left`
                     ) : 'Checking Scans...'}
                   </span>
                   <span className="text-[10px] text-zinc-400 font-mono hidden md:inline truncate max-w-[120px]">
@@ -1391,18 +1395,18 @@ export default function Dashboard() {
                   <div className="space-y-1">
                     <div className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest text-violet-400">
                       <Zap className="w-3.5 h-3.5 fill-violet-400 text-violet-400" />
-                      Scan Limit Reached (5/5)
+                      Out of Scan Credits
                     </div>
-                    <h3 className="text-sm font-bold text-white">Unlock Unlimited Resume Evaluations</h3>
+                    <h3 className="text-sm font-bold text-white">Add Scan Credits to Continue</h3>
                     <p className="text-xs text-zinc-400 max-w-xl">
-                      You've used all 5 of your free monthly scans. Upgrade to Pro for unlimited scoring, deep technical calibration, and automated bullet-point optimization.
+                      You've used all of your available scans. Unlock more scans instantly starting at less than the cost of a coffee to get deep technical calibration and tailoring.
                     </p>
                   </div>
                   <button
-                    onClick={() => setSubscriptionOpen(true)}
+                    onClick={() => setCreditModalOpen(true)}
                     className="px-4 py-2.5 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white rounded-lg text-xs font-bold transition-all shadow-lg shadow-violet-950/20 shrink-0 cursor-pointer"
                   >
-                    Upgrade to Pro
+                    Add Credits
                   </button>
                 </div>
               </div>
@@ -1607,14 +1611,14 @@ export default function Dashboard() {
 
                 {/* CTA */}
                 {isLimitReached ? (
-                  <button onClick={() => setSubscriptionOpen(true)}
+                  <button onClick={() => setCreditModalOpen(true)}
                     className="w-full py-3.5 rounded-xl font-bold text-sm text-white
                                bg-gradient-to-r from-violet-600 to-blue-600
                                hover:from-violet-500 hover:to-blue-500
                                shadow-lg shadow-violet-900/30
                                flex items-center justify-center gap-2 transition-all group cursor-pointer">
                     <Zap className="w-4 h-4 fill-white" />
-                    Upgrade to Pro to Score Profile
+                    Get Scan Credits to Score Profile
                   </button>
                 ) : (
                   <button onClick={() => runAnalysis()}
@@ -2064,10 +2068,10 @@ export default function Dashboard() {
         onSelectScan={handleLoadPastScan}
       />
 
-      <SubscriptionModal
-        isOpen={subscriptionOpen}
-        onClose={() => setSubscriptionOpen(false)}
-        onSuccess={handleSubscriptionSuccess}
+      <PaymentModal
+        isOpen={creditModalOpen}
+        onClose={() => setCreditModalOpen(false)}
+        onSuccess={handleCreditPurchaseSuccess}
       />
     </div>
   );
