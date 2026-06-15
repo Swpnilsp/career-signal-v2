@@ -420,6 +420,15 @@ export default function Dashboard() {
   const isLimitReached = !!session && !isExcludedUser && !isPro && monthlyScansCount >= 5;
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('upload') === 'true' || params.get('cta') || params.get('start') === 'true') {
+        setShowInputForm(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     const supabase = createClient();
     
     // Get initial session
@@ -1075,7 +1084,7 @@ export default function Dashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {([
-              { title: 'Overall Score & Breakdown', desc: 'A rigorous FAANG-bar grading across 5 core competency dimensions.' },
+              { title: 'Overall Score & Breakdown', desc: 'A rigorous tech-hiring-bar grading across 5 core competency dimensions.' },
               { title: 'Strengths & Weakspots', desc: 'Direct, uncensored hiring manager critiques highlighting your red flags.' },
               { title: 'Role Fit Analysis', desc: 'Deep alignment comparison mapping your resume content directly to sub-role rubrics.' },
               { title: 'Market Competitiveness', desc: 'See how your experience stack, metrics, and leadership signals rank in the market.' },
@@ -1213,7 +1222,7 @@ export default function Dashboard() {
 
               <div className="space-y-3 p-5 rounded-xl bg-violet-950/10 border border-violet-500/25 shadow-lg shadow-violet-950/30">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">FAANG-Bar Ready</span>
+                  <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Tech-Bar Ready</span>
                   <span className="text-xs text-[var(--text-3)] font-bold">80+</span>
                 </div>
                 <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-emerald-400">
@@ -1239,7 +1248,7 @@ export default function Dashboard() {
               <div className="flex justify-between text-[11px] text-[var(--text-2)] mt-2">
                 <span>⚠️ High Risk</span>
                 <span>⚖️ Average</span>
-                <span>🚀 Top 10% (FAANG Bar)</span>
+                <span>🚀 Top 10% (Tech Hiring Bar)</span>
               </div>
             </div>
           </div>
@@ -1360,7 +1369,7 @@ export default function Dashboard() {
             </div>
             <p className="text-[var(--text-1)] font-semibold">{loadStep || 'Processing…'}</p>
             <p className="text-[var(--text-3)] text-sm mt-1 max-w-xs text-center">
-              Our AI hiring manager is evaluating your profile against FAANG-bar criteria.
+              Our AI hiring manager is evaluating your profile against top-tier tech hiring criteria.
             </p>
           </div>
         )}
@@ -1409,7 +1418,7 @@ export default function Dashboard() {
               </h1>
               <p className="text-[var(--text-2)] text-base max-w-lg mx-auto">
                 Upload your resume, select your target role, and get a rigorous
-                FAANG-bar evaluation with actionable improvements.
+                top-tier tech hiring bar evaluation with actionable improvements.
               </p>
               {isDev && (
                 <div className="flex justify-center pt-2">

@@ -1,8 +1,8 @@
 import Dashboard from "@/components/Dashboard";
 
 export const metadata = {
-  title: "CareerSignal AI - Resume & LinkedIn Career Scoring",
-  description: "FAANG-grade AI resume evaluation, job description scoring, and tailored optimization engine.",
+  title: "GetHired AI (CareerSignal) | Tech Resume Scorer & Tailor Matcher",
+  description: "Instant AI-powered tech resume evaluation, job description matching alignment, and custom bullet-point tailoring optimizer.",
 };
 
 export default function Home() {

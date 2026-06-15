@@ -421,7 +421,7 @@ export async function analyzeProfile(
   const rubricList = roleConfig.scoring_rubric.map((r, i) => `${i + 1}. "${r}"`).join('\n');
 
   const prompt = `
-You are an elite FAANG hiring manager, technical interviewer, and senior recruiter combined.
+You are an elite top-tier tech hiring manager, technical interviewer, and senior recruiter combined.
 
 Evaluate this candidate for the role: **${roleConfig.sub_role_label}** (${roleConfig.cluster_label})
 
@@ -478,7 +478,7 @@ Output ONLY valid JSON (no markdown) matching this exact structure:
 
 CRITICAL INSTRUCTIONS & GROUNDING RULES:
 1. Dimensions array MUST be in the exact same order as the rubric list above.
-2. Scores must be realistic and demanding — this is FAANG-bar evaluation.
+2. Scores must be realistic and demanding — this is a top-tier tech hiring bar evaluation.
 3. Every rewritten bullet, summary, and work experience responsibility must be strictly grounded in the candidate's actual profile.
 4. You are allowed to rephrase, reword, reorder, and optimize styling to emphasize keywords.
 5. YOU MUST NOT INVENT, HALLUCINATE, OR ADD ANY:
